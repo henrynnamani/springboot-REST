@@ -3,7 +3,6 @@ package com.graey.spring_boot_rest.Controller;
 import com.graey.spring_boot_rest.model.JobPost;
 import com.graey.spring_boot_rest.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +22,22 @@ public class JobController {
         return service.getJob(postId);
     }
 
+    @GetMapping("load")
+    public String loadData() {
+        service.load();
+
+        return "success";
+    }
+
     @PostMapping("post")
     public JobPost addJob(@RequestBody JobPost jobPost) {
         service.addJob(jobPost);
         return service.getJob(jobPost.getPostId());
+    }
+
+    @GetMapping("posts/keyword/{keyword}")
+    public List<JobPost> searchByKeyword(@PathVariable("keyword") String keyword) {
+
     }
 
     @PutMapping("post")
